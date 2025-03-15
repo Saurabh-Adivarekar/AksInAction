@@ -16,7 +16,7 @@ app.use(cors({
 
 // MySQL Connection
 const db = mysql.createConnection({
-    host: 'mysql',  // 'mysql' is the service name in Docker Compose
+    host: 'myapp-mysql',  // 'mysql' is the service name in Docker Compose
     user: 'root',
     password: 'rootpassword',
     database: 'names_db',
