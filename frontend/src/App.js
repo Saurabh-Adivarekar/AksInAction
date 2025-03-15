@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 
-// Helper to check if the app is running inside Docker or not
-const isDocker = window.location.hostname === 'localhost' ? false : true;
-const backendURL = isDocker ? 'http://backend:3000' : 'http://localhost:3000';
+// Set the backend URL to your EC2 public IP (adjust as necessary)
+const backendURL = 'http://3.110.45.130:3000'; // Replace with your actual EC2 IP and port
 
 function App() {
   const [inputName, setInputName] = useState('');
