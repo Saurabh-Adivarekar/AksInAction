@@ -29,6 +29,22 @@ db.connect((err) => {
     process.exit(1);  // Exit if unable to connect to MySQL
   }
   console.log('Connected to MySQL!');
+  
+  // Check if the 'names' table exists, if not, create it
+  const createTableQuery = `
+    CREATE TABLE IF NOT EXISTS names (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      name VARCHAR(255) NOT NULL
+    );
+  `;
+  
+  db.query(createTableQuery, (err, result) => {
+    if (err) {
+      console.error('Error creating table:', err);
+      process.exit(1);  // Exit if unable to create table
+    }
+    console.log('Checked/created table: names');
+  });
 });
 
 // Health check endpoint
