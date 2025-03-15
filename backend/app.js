@@ -10,7 +10,7 @@ const port = 3000;
 // Middleware
 app.use(bodyParser.json());
 app.use(cors({
-  origin: 'http://3.110.45.130:8080',  // Allow requests from your frontend
+  origin: '*',  // Allow requests from your frontend
   methods: ['GET', 'POST'],  // Allow only GET and POST requests
   allowedHeaders: ['Content-Type'],  // Allow only Content-Type header
 }));
