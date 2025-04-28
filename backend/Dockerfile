@@ -17,10 +17,10 @@ COPY . .
 EXPOSE 3000
 
 # Define environment variable for MySQL connection
-ENV MYSQL_HOST mysql
-ENV MYSQL_USER root
-ENV MYSQL_PASSWORD mysecurepassword
-ENV MYSQL_DB names_db
+# ENV MYSQL_HOST=mysql-service
+# ENV MYSQL_USER=root
+# ENV MYSQL_PASSWORD=thepassword
+# ENV MYSQL_DB=names_db
 
 # Run the app
 CMD ["node", "app.js"]

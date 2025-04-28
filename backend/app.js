@@ -1,5 +1,5 @@
 const express = require('express');
-const mysql = require('mysql');
+const mysql = require('mysql2');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const path = require('path');
@@ -15,13 +15,20 @@ app.use(cors({
   allowedHeaders: ['Content-Type'],  // Allow only Content-Type header
 }));
 
-// MySQL Connection
 const db = mysql.createConnection({
-  host: 'myapp-mysql',  // Use MySQL container name if within Docker network, or 'localhost' if running on the same machine
-  user: 'root',
-  password: 'rootpassword',
-  database: 'names_db',
+  host: process.env.DB_HOST,  
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
 });
+
+// MySQL Connection
+// const db = mysql.createConnection({
+//   host: 'mysql-service',  
+//   user: 'root',
+//   password: 'thepassword',
+//   database: 'names_db',
+// });
 
 db.connect((err) => {
   if (err) {
@@ -87,5 +94,5 @@ app.get('*', (req, res) => {
 
 // Start the server
 app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);
+  console.log(`Server running on localhost port: ${port}`);
 });

@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-deployment
+  namespace: dev-namespace
+  labels:
+    app: frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+      - name: frontend
+        image: myappregistry.azurecr.io/frontend/myapp-frontend:latest
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "500m"
+          limits:
+            memory: "256Mi"
+            cpu: "1"

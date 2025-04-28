@@ -1,0 +1,89 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deployment
+  namespace: dev-namespace
+  labels:
+    app: backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - name: backend
+        image: myappregistry.azurecr.io/backend/myapp-backend:latest
+        # command:
+        # - "/bin/sleep"
+        # - "10000"
+        ports:
+        - containerPort: 3000
+        volumeMounts:
+        - name: secrets-store01-inline
+          mountPath: "/mnt/secrets-store"
+          readOnly: true
+        envFrom:
+        - secretRef:
+            name: backend-secrets
+        resources:
+          requests:
+            memory: "250Mi"
+            cpu: "128m"
+          limits:
+            memory: "500Mi"
+            cpu: "256m"
+      volumes:
+      - name: secrets-store01-inline
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: "azure-kvname-user-msi"
+
+
+
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: backend-deployment
+#   namespace: dev-namespace
+#   labels:
+#     app: backend
+# spec:
+#   replicas: 2
+#   selector:
+#     matchLabels:
+#       app: backend
+#   template:
+#     metadata:
+#       labels:
+#         app: backend
+#     spec:
+#       containers:
+#       - name: backend
+#         image: myappregistry.azurecr.io/backend/myapp-backend:latest
+#         ports:
+#         - containerPort: 3000
+#         volumeMounts:
+#         - name: secrets-store01-inline
+#           mountPath: "/mnt/secrets-store"
+#           readOnly: true
+#         resources:
+#           requests:
+#             memory: "250Mi"
+#             cpu: "128m"
+#           limits:
+#             memory: "500Mi"
+#             cpu: "256m"
+#       volumes:
+#       - name: secrets-store01-inline
+#         csi:
+#           driver: secrets-store.csi.k8s.io
+#           readOnly: true
+#           volumeAttributes:
+#             secretProviderClass: "azure-kvname-user-msi"
