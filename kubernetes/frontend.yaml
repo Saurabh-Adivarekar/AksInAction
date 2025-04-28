@@ -20,6 +20,12 @@ spec:
         image: myappregistry.azurecr.io/frontend/myapp-frontend:latest
         ports:
         - containerPort: 8080
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 5
         resources:
           requests:
             memory: "128Mi"
